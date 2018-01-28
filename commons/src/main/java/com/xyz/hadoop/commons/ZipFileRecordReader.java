@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -16,12 +17,12 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
-public class ZipFileRecordReader extends RecordReader<Text, BytesWritable> {
+public class ZipFileRecordReader extends RecordReader<Text, Text> {
 
 	private FSDataInputStream fsin;
 	private ZipInputStream zip;
 	private Text currentKey;
-	private BytesWritable currentValue;
+	private Text currentValue;
 	private boolean isFinished = false;
 
 	@Override
@@ -36,7 +37,7 @@ public class ZipFileRecordReader extends RecordReader<Text, BytesWritable> {
 	}
 
 	@Override
-	public BytesWritable getCurrentValue() throws IOException, InterruptedException {
+	public Text getCurrentValue() throws IOException, InterruptedException {
 		return currentValue;
 	}
 
@@ -63,7 +64,8 @@ public class ZipFileRecordReader extends RecordReader<Text, BytesWritable> {
 		}
 		// Set the key
 		currentKey = new Text(entry.getName());
-
+		
+		/*
 		// Set the value
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		byte[] temp = new byte[8192];
@@ -74,8 +76,10 @@ public class ZipFileRecordReader extends RecordReader<Text, BytesWritable> {
 			else
 				break;
 		}
+		*/
+		currentValue = currentKey;//new Text(bos.toString());
+		//bos.close();
 		zip.closeEntry();
-		currentValue = new BytesWritable(bos.toByteArray());
 		return true;
 	}
 

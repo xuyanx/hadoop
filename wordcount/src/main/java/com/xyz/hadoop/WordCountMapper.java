@@ -8,12 +8,12 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+public class WordCountMapper extends Mapper<Text, Text, Text, IntWritable> {
 	private final static IntWritable one = new IntWritable(1);
 	private Text word = new Text();
 
 	@Override
-	protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+	protected void map(Text key, Text value, Context context) throws IOException, InterruptedException {
 		String line = value.toString();
 		StringTokenizer st = new StringTokenizer(line, " \n\r\t");
 		while (st.hasMoreTokens()) {

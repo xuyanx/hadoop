@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 
-public class ZipFileInputFormat extends FileInputFormat<Text, BytesWritable> {
+public class ZipFileInputFormat extends FileInputFormat<Text, Text> {
 
 	@Override
 	protected boolean isSplitable(org.apache.hadoop.mapreduce.JobContext ctx, Path filename) {
@@ -18,7 +18,7 @@ public class ZipFileInputFormat extends FileInputFormat<Text, BytesWritable> {
 	}
 
 	@Override
-	public RecordReader<Text, BytesWritable> createRecordReader(InputSplit split, TaskAttemptContext conext)
+	public RecordReader<Text, Text> createRecordReader(InputSplit split, TaskAttemptContext conext)
 			throws IOException, InterruptedException {
 		return new ZipFileRecordReader();
 	}
