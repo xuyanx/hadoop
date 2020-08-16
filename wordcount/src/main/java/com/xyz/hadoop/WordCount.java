@@ -1,7 +1,6 @@
 package com.xyz.hadoop;
 
 import com.xyz.hadoop.commons.ZipFileInputFormat;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
